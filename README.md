@@ -2,7 +2,7 @@
 |Nome do Campo| Tipo |Descrição|
 |-------------|----|---------|
 |nome_estabelecimento|Cadeia de caracteres |Nome da  empresa|
-|gerente|Cadeia de Caracteres| Nome do (a)gerente|
+|gerente|Cadeia de Caracteres| Nome do  gerente|
 |servcontratados|Cadeia de caracteres|Serviços terceirizados contratados pela empresa| 
 |local| Cadeia de caracteres| Localização da empresa|
 | telefone | Cadeia de caracteres | Número de telefone da empresa|
