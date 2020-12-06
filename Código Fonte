@@ -1,0 +1,772 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+/* Programa para gerenciamento de uma clínica*/
+int main()
+{
+    //Configuração do Teclado para Português
+    setlocale(LC_ALL,"");
+    // Declaração de variáveis
+    char nome_estabelecimento[60], gerente[60], servcontratados[60][60], local[80], telefone[15], proced[1000][60], resp;
+    char dia_mes_ano[1000][11], horario[1000][6], nome_cliente[1000][60], condicao[1000][20], telcliente[1000][15];
+    char endereco[1000][80], cpf[1000][13], emailcliente[1000][60], nome_fornecedor[200][60];
+    char funcionario[200][60], idfuncionario[200][12], contas[200][60], receber[200][60];
+    int idade[1000], mes=0, ano=0, i, opcp, j, nmrfun=0, nmrserv=0, codagend=0, nmrforn=0, codcliente=0, npag=0;
+    float vpservico[1000], vppacote[1000], gastosmes[12], gastosano[1000],ganhosmes[12], ganhosano[1000];
+    float lucro=0, lucromes[12], lucroano[1000], salario[200], salserv[200], capital=0, vreceber[500], total[1000];
+    float financas=0, vpagar[500], nparcelas[1000], formapagv[1000], formapagp[1000], contforn[200];
+
+    system("color 17");
+    printf("\n\n =================================================== \n\n");
+    printf("\n\n    BEM-VINDO AO SISTEMA DIGITAL DE NOSSA CLÍNICA! \n\n");
+    printf("\n\n =================================================== \n\n");
+    printf("\n Digite 1 para abrir o menu ou 0 para fechar o sistema: ===> ");
+    scanf("%d", &opcp);
+
+    while (opcp!=0)
+    {
+        // Caso a opção escolhida na abertura do programa seja 1
+        if (opcp==1)
+        {
+            printf("\n\n \t\t MENU\n\n");
+            printf("\n 1 ==> Fazer cadastro da clínica");
+            printf("\n 2 ==> Fazer cadastro de clientes");
+            printf("\n 3 ==> Agendar");
+            printf("\n 4 ==> Consultar agenda");
+            printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+            printf("\n 6 ==> Consultar informações da clínica");
+            printf("\n 7 ==> Consultar informações de clientes");
+            printf("\n 8 ==> Consultar informações econômicas da clínica");
+            printf("\n 0 ==> Sair");
+
+            printf("\n\n Informe o número da opção desejada ===> ");
+            scanf("%d",&opcp);
+            fflush(stdin);
+            system("cls");
+        }
+// Caso a opção escolhida pelo usuário seja 1
+        if (opcp==1)
+        {
+            printf("\n\n =============================");
+            printf("\n      CADASTRO DA CLÍNICA ");
+            printf("\n\n =============================");
+            fflush(stdin);
+            printf("\n Informe o número do mês atual: ");
+            fflush(stdin);
+            scanf("%d", &mes);
+            printf("\n Informe o ano atual: ");
+            fflush(stdin);
+            scanf("%d", &ano);
+            fflush(stdin);
+            printf("\n\n Informe o nome do estabelecimento:\n\n");
+            fflush(stdin);
+            gets(nome_estabelecimento);
+            fflush(stdin);
+            printf("\n\n Informe o nome do(a) gerente:\n\n");
+            fflush(stdin);
+            gets(gerente);
+            fflush(stdin);
+            system("pause");
+            system("cls");
+            printf("\n\n Informe o endereço do estabelecimento:\n\n");
+            fflush(stdin);
+            gets(local);
+            fflush(stdin);
+            printf("\n Informe o número telefônico do estabelecimento:\n\n");
+            fflush(stdin);
+            gets(telefone);
+            fflush(stdin);
+            printf("\n Informe o capital do estabelecimento:\n\n");
+            scanf("%f", &capital);
+            fflush(stdin);
+            printf("\nInforme o número de funcionários:\n\n");
+            scanf("%d", &nmrfun);
+            system("pause");
+            system("cls");
+            // Enquanto a variável de controle não alcançar o valor do número de funcionários, o cadastro se repetirá
+            for (i=0; i<nmrfun; i++)
+            {
+                printf("\n\n ================================== \n\n");
+                printf("\n\n        FUNCIONÁRIOS                 ");
+                printf("\n\n ================================== \n\n");
+                printf("\n Informe o nome do funcionário: \n\n");
+                fflush(stdin);
+                gets(funcionario[i]);
+                fflush(stdin);
+                printf("\n Informe o código de identificação do funcionário: \n\n");
+                fflush(stdin);
+                gets(idfuncionario[i]);
+                fflush(stdin);
+                printf("\n Informe o salário do funcionário: \n\n");
+                scanf("%f", &salario[i]);
+                gastosmes[mes]= gastosmes[mes]+salario[i];
+                fflush(stdin);
+                system("pause");
+                system("cls");
+            }
+            printf("\n\n ================================== ");
+            printf("\n\n        SERVIÇOS TERCEIRIZADOS      ");
+            printf("\n\n ================================== ");
+            printf("\n Informe o número de serviços terceirizados: \n\n");
+            scanf("%d", &nmrserv);
+
+// Enquanto a variável de controle não alcançar o valor do número de serviços/empresas contratadas, o cadastro se repetirá
+            for (i=0; i<nmrserv; i++)
+            {
+                printf("\n Informe o nome da empresa contratada: \n\n");
+                fflush(stdin);
+                gets(servcontratados[i]);
+                fflush(stdin);
+                system("pause");
+                system("cls");
+                printf("\n Informe o valor do pagamento feito à empresa: \n\n");
+                scanf("%f", &salserv[i]);
+                gastosmes[mes]=gastosmes[mes]+salserv[i];
+
+            }
+            printf("\n\n ================================== ");
+            printf("\n\n        FORNECEDORES                ");
+            printf("\n\n ================================== ");
+            printf("\n Informe o número de fornecedores: ");
+            scanf("%d", &nmrforn);
+
+// Enquanto a variável de controle não alcançar o valor do número de fornecedores, o cadastro se repetirá
+            for (i=0; i<nmrforn; i++)
+            {
+                printf("\n Informe o nome do fornecedor: \n\n");
+                fflush(stdin);
+                gets(nome_fornecedor[i]);
+                fflush(stdin);
+                system("pause");
+                system("cls");
+                printf("\n Informe o valor total pago nos itens fornecidos: \n\n ");
+                scanf("%f", &contforn[i]);
+                gastosmes[mes]= gastosmes[mes]+contforn[i];
+
+            }
+
+            fflush(stdin);
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            scanf("%c",&resp);
+// Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                fflush(stdin);
+                scanf("%d",&opcp);
+                system("cls");
+            }
+            // Se o usuário digitar qualquer letra diferente, o programa é fechado
+            else
+            {
+                opcp=0;
+            }
+        }
+// Caso a opção escolhida pelo usuário seja 2
+        if (opcp==2)
+
+        {
+            printf("\n\n ================================== ");
+            printf("\n\n        CADASTRO DE CLIENTES        ");
+            printf("\n\n ================================== ");
+            printf("\n Quantos clientes desejas cadastrar: ");
+            scanf("%d", &j);
+            system("pause");
+            system("cls");
+            // Enquanto a variável de controle não alcançar o valor do número de clientes a serem cadastrados, o cadastro se repetirá
+            for (i=0; i<j; i++)
+            {
+                // A partir do código do cliente, todas as informações do cliente ficam relacionadas ao mesmo
+                printf("\n Informe o código numérico (MENOR QUE 1000) do(a) cliente: \n\n");
+                scanf("%d", &codcliente);
+                printf("\n Informe o nome do(a) cliente: \n\n");
+                fflush(stdin);
+                gets(nome_cliente[codcliente]);
+                fflush(stdin);
+                printf("\n Informe a idade do(a) cliente: \n\n");
+                scanf("%d",&idade[codcliente]);
+                printf("\n Informe o CPF do(a) cliente: \n\n");
+                fflush(stdin);
+                gets(cpf[codcliente]);
+                fflush(stdin);
+                system("pause");
+                system("cls");
+                printf("\n Informe o número telefônico do(a) cliente: \n\n");
+                fflush(stdin);
+                gets(telcliente[codcliente]);
+                fflush(stdin);
+                system("pause");
+                system("cls");
+                printf("\n Informe o endereço do(a) cliente: \n\n");
+                fflush(stdin);
+                gets(endereco[codcliente]);
+                fflush(stdin);
+                printf("\n Informe o e-mail do(a) cliente: \n\n");
+                fflush(stdin);
+                gets(emailcliente[codcliente]);
+                fflush(stdin);
+                printf("\n O(a) cliente possui alguma condição que interfira na realização de procedimentos? S ou N \n\n");
+                scanf("%c",&resp);
+                fflush(stdin);
+                // Se o usuário digitar S, logo em seguida ele poderá digitar a condição especial do cliente
+                if(resp=='S')
+                {
+                    printf("\n Qual? \n\n");
+                    fflush(stdin);
+                    gets(condicao[codcliente]);
+                    fflush(stdin);
+                }
+            }
+            system("pause");
+            system("cls");
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            fflush(stdin);
+            scanf("%c",&resp);
+            fflush(stdin);
+// Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                scanf("%d",&opcp);
+                fflush(stdin);
+                system("cls");
+            }
+            // Se o usuário digitar qualquer letra diferente, o programa é fechado
+            else
+            {
+                opcp=0;
+            }
+        }
+        // Caso a opção escolhida pelo usuário seja 3
+        if (opcp==3)
+        {
+            printf("\n\n =============================== ");
+            printf("\n            AGENDAMENTO      ");
+            printf("\n\n =============================== ");
+            printf("\n Quantos clientes desejas agendar: ");
+            scanf("%d", &j);
+            system("pause");
+            system("cls");
+            // Enquanto a variável de controle não alcançar o valor do número de clientes a serem agendados, o cadastro se repetirá
+            for (i=0; i<j; i++)
+            {
+                // A partir do código de agendamento, todas as informações do agendamento ficam relacionadas ao mesmo
+                printf("\n Informe o código de agendamento: \n\n ");
+                scanf("%d", &codagend);
+                printf("\n Informe o nome do(a) cliente: \n\n");
+                fflush(stdin);
+                gets(nome_cliente[codagend]);
+                fflush(stdin);
+                printf("\n A data marcada é: (Insira as barras como no exemplo: 10/12/2020) \n\n");
+                fflush(stdin);
+                gets(dia_mes_ano[codagend]);
+                fflush(stdin);
+                printf("\n O horário marcado é: (Insira os dois pontos como no exemplo: 10:30) \n\n");
+                fflush(stdin);
+                gets(horario[codagend]);
+                fflush(stdin);
+                printf("\n O procedimento realizado será: \n\n");
+                gets(proced[codagend]);
+                fflush(stdin);
+                system("pause");
+                system("cls");
+            }
+
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            fflush(stdin);
+            scanf("%c",&resp);
+            fflush(stdin);
+// Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                scanf("%d",&opcp);
+                fflush(stdin);
+                system("cls");
+            }
+            // Se o usuário digitar qualquer letra diferente, o programa é fechado
+            else
+            {
+                opcp=0;
+            }
+        }
+// Caso a opção escolhida pelo usuário seja 4
+        if (opcp==4)
+        {
+            printf("\n\n =========================== ");
+            printf("\n              AGENDA      ");
+            printf("\n\n =========================== ");
+            printf("\n\n Informe a quantidade de clientes agendados que desejas verificar: \n\n");
+            scanf("%d", &j);
+            system("pause");
+            system("cls");
+            // Enquanto a variável de controle não alcançar o valor do número de clientes a serem agendados, o agendamento se repetirá
+            for (i=0; i<j; i++)
+            {
+                // A partir do código do agendamento, todas as informações relacionadas ao mesmo podem ser visualizadas
+                printf("\n\n Informe o código de agendamento: \n\n");
+                scanf("%d", &codagend);
+                printf("\n Nome do(a) cliente: \n\n");
+                puts(nome_cliente[codagend]);
+                printf("\n A data marcada é: \n\n");
+                puts(dia_mes_ano[codagend]);
+                printf("\n O horário marcado é: \n\n");
+                puts(horario[codagend]);
+                printf("\n O procedimento realizado será: \n\n");
+                puts(proced[codagend]);
+                system("pause");
+                system("cls");
+            }
+
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            fflush(stdin);
+            scanf("%c",&resp);
+            fflush(stdin);
+            // Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                fflush(stdin);
+                scanf("%d", &opcp);
+                fflush(stdin);
+                system("cls");
+            }
+            // Se o usuário digitar qualquer letra diferente, o programa é fechado
+            else
+            {
+                opcp=0;
+            }
+        }
+// Caso a opção escolhida pelo usuário seja 5
+        if (opcp==5)
+        {
+            printf("\n\n =========================== ");
+            printf("\n           RECEBIMENTO      ");
+            printf("\n\n =========================== ");
+            printf("\n Digite o número do mês atual: ");
+            scanf("%d", &mes);
+            printf("\n Digite o ano atual: ");
+            scanf("%d", &ano);
+            system("pause");
+            system("cls");
+            // A partir do número de pagamento, todas as informações do pagamento são relacionadas ao mesmo
+            printf("\n Insira o número da realização do pagamento (menor que 1000): \n\n");
+            scanf("%d", &npag);
+            printf("\n\n Insira a quantidade de procedimentos realizados: ");
+            scanf("%d", &j);
+            // Enquanto a variável de controle não alcançar o valor do número de procedimentos realizados, o cadastro se repetirá
+            for (i=0; i<j; i++)
+            {
+                system("pause");
+                system("cls");
+                printf("\n O procedimento realizado está incluido em um pacote? S ou N \n\n");
+                fflush(stdin);
+                scanf("%c",&resp);
+                fflush(stdin);
+                // Se o usuário digitar S, o procedimento realizado receberá o valor por pacote inserido
+                if (resp=='S')
+                {
+                    printf("\n Insira o nome do procedimento realizado: \n\n");
+                    fflush(stdin);
+                    gets(proced[i]);
+                    fflush(stdin);
+                    printf("\n Insira o valor do pacote: \n\n");
+                    scanf("%f", &vppacote[i]);
+                    ganhosmes[mes]= ganhosmes[mes]+vppacote[i];
+                    total[npag]=total[npag]+vppacote[i];
+                }
+                // Se o usuário digitar N,o procedimento realizado receberá o valor unitário por serviço inserido
+                else if (resp== 'N')
+                {
+                    printf("\n Insira o nome do procedimento realizado: \n\n");
+                    fflush(stdin);
+                    gets(proced[i]);
+                    fflush(stdin);
+                    printf("\n Insira o valor do procedimento: \n\n");
+                    scanf("%f", &vpservico[i]);
+                    ganhosmes[mes]= ganhosmes[mes]+vpservico[i];
+                    total[npag]=total[npag]+vpservico[i];
+                }
+            }
+            printf("\n\n =========================== ");
+            printf("\n\n     FORMA DE PAGAMENTO");
+            printf("\n\n =========================== ");
+            printf("\n O pagamento será à vista ou parcelado? \n\n");
+            printf("\n Digite V para à vista ou P para parcelado: ");
+            fflush(stdin);
+            scanf("%c",&resp);
+            fflush(stdin);
+            // Se o usuário digitar V, o valor do pagamento deverá ser pago em apenas uma vez
+            if (resp=='V')
+            {
+                formapagv[npag]=total[npag];
+
+            }
+            // Se o usuário digitar P, o valor do pagamento será dividido no número de parcelas também inserido
+            else if (resp== 'P')
+            {
+                printf("\n Insira o número de parcelas: ");
+                scanf("%f", &nparcelas[npag]);
+                formapagp[npag]= total[npag]/nparcelas[npag];
+            }
+
+            ganhosano[ano]= ganhosano[ano]+ganhosmes[mes];
+            system("pause");
+            system("cls");
+
+            printf("\n\n =========================== ");
+            printf("\n             RECIBO      ");
+            printf("\n\n =========================== ");
+            printf("\n\n PROCEDIMENTO(S) REALIZADO(S): \n\n");
+            // Enquanto a variável de controle não alcançar o valor do número de procedimentos, a impressão se repetirá
+            for (i=0; i<j; i++)
+            {
+                puts(proced[i]);
+// Se o número do procedimento for igual a quantidade de procedimentos escolhida -1, significa que este é o último procedimento
+                if (i==(j-1))
+
+                {
+                    printf("\n O valor total a ser pago é de: %.2f \n\n", total[npag]);
+// Se o vetor formapagp[npag] receber um valor diferente de zero, significa que o usuário escolheu parcelar o valor
+                    if (formapagp[npag]!=0)
+                        printf("\n Pagamento realizado em: %.0f " "parcelas de %.2f \n\n", nparcelas[npag], formapagp[npag]);
+
+                }
+
+            }
+
+            system("pause");
+            system("cls");
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            fflush(stdin);
+            scanf("%c",&resp);
+            fflush(stdin);
+
+// Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                scanf("%d",&opcp);
+                fflush(stdin);
+                system("cls");
+
+            }
+            // Se o usuário digitar qualquer letra diferente, o programa é fechado
+            else
+            {
+                opcp=0;
+            }
+        }
+// Caso a opção escolhida pelo usuário seja 6
+        if (opcp==6)
+        {
+            printf("\n\n ===============================");
+            printf("\n       INFORMAÇÕES DA CLÍNICA");
+            printf("\n\n ===============================");
+            printf("\n\n Nome do estabelecimento: ");
+            puts(nome_estabelecimento);
+            printf("\n\n Nome do(a) gerente: ");
+            puts(gerente);
+            printf("\n\n Endereço do estabelecimento: ");
+            puts(local);
+            printf("\n\n Número telefônico do estabelecimento: ");
+            puts(telefone);
+            printf("\n\n Capital do estabelecimento: %.2f", capital);
+            system("pause");
+            system("cls");
+            printf("\n\n Número de funcionários: %d", nmrfun);
+            // Enquanto a variável de controle não alcançar o valor do número de funcionários, a impressão se repetirá
+            for (i=0; i<nmrfun; i++)
+            {
+                printf("\n %s", funcionario[i]);
+                printf("\n Código de identificação: ");
+                puts(idfuncionario[i]);
+                printf("\n Salário: %f", salario[i]);
+            }
+            printf("\n\n Número de serviços terceirizados contratados: %d", nmrserv);
+            // Enquanto a variável de controle não alcançar o valor do número de serviços/empresas contratados, a impressão se repetirá
+            for (i=0; i<nmrserv; i++)
+            {
+                printf("\n %s", servcontratados[i]);
+                printf("\n O valor pago à empresa é de: %f", salserv[i]);
+
+            }
+            printf("\n\n Número de fornecedores: %d", nmrforn);
+            // Enquanto a variável de controle não alcançar o valor do número de fornecedores, a impressão se repetirá
+            for (i=0; i<nmrforn; i++)
+            {
+                printf("\n %s", nome_fornecedor[i]);
+                printf("\n O valor pago nos itens fornecidos nesse mês é de: %f \n", contforn[i]);
+
+            }
+
+
+            system("pause");
+            system("cls");
+
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            fflush(stdin);
+            scanf("%c",&resp);
+            fflush(stdin);
+// Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                scanf("%d",&opcp);
+                fflush(stdin);
+                system("cls");
+            }
+            // Se o usuário digitar qualquer letra diferente, o programa é fechado
+            else
+            {
+                opcp=0;
+            }
+        }
+// Caso a opção escolhida pelo usuário seja 7
+        if (opcp==7)
+        {
+            printf("\n\n ================================== ");
+            printf("\n\n             CLIENTES         ");
+            printf("\n\n ================================== ");
+            printf("\n\n Informe a quantidade de clientes cadastrados que desejas verificar: ");
+            scanf("%d", &j);
+            system("pause");
+            system("cls");
+            // Enquanto a variável de controle não alcançar o valor do número de clientes cadastrados, a impressão se repetirá
+            for (i=0; i<j; i++)
+            {
+                // A partir do código do cliente, todas as informações relacionadas ao mesmo podem ser visualizadas
+                printf("\n Informe o código numérico do(a) cliente: \n\n");
+                fflush(stdin);
+                scanf("%d", &codcliente);
+                printf("\n Nome do(a) cliente: \n\n");
+                puts(nome_cliente[codcliente]);
+                printf("\n A idade do(a) cliente é: %d", idade[codcliente]);
+                printf("\n CPF do(a) cliente: ");
+                puts(cpf[codcliente]);
+                system("pause");
+                system("cls");
+                printf("\n Número telefônico do(a) cliente: ");
+                puts(telcliente[codcliente]);
+                printf("\n Endereço do(a) cliente: ");
+                puts(endereco[codcliente]);
+                printf("\n E-mail do(a) cliente: ");
+                puts(emailcliente[codcliente]);
+                printf("\n Condição do cliente: ");
+                puts(condicao[codcliente]);
+            }
+
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            fflush(stdin);
+            scanf("%c",&resp);
+            fflush(stdin);
+
+// Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                scanf("%d",&opcp);
+                fflush(stdin);
+                system("cls");
+            }
+            // Se o usuário digitar qualquer letra diferente, o programa é fechado
+            else
+            {
+                opcp=0;
+            }
+        }
+// Caso a opção escolhida pelo usuário seja 8
+        if (opcp==8)
+
+        {
+            printf("\n\n ======================== ");
+            printf("\n         FINANCEIRO ");
+            printf("\n\n ======================== ");
+            printf("\n Digite o número do mês atual: ");
+            scanf("%d", &mes);
+            printf("\n Digite o ano atual: ");
+            scanf("%d", &ano);
+            printf("\n Informe o número de pagamentos a receber no mês atual: ");
+            scanf("%d", &j);
+            system("pause");
+            system("cls");
+            // Enquanto a variável de controle não alcançar o valor do número de pagamentos a receber, o cadastro se repetirá
+            for (i=0; i<j; i++)
+            {
+                printf("\n Informe o nome do cliente ou empresa que fará o pagamento: \n\n");
+                fflush(stdin);
+                gets(receber[i]);
+                fflush(stdin);
+                printf("\n Informe o valor a receber: \n\n");
+                scanf("%f", &vreceber[i]);
+                // Após ser inserido o número do mês, os valores recebidos desse mesmo mês recebem o próprio mais o novo valor recebido
+                ganhosmes[mes]=ganhosmes[mes]+vreceber[i];
+                // Após ser inserido o número do mês, o lucro desse mesmo mês recebem o próprio mais o novo valor recebido
+                lucromes[mes]=lucromes[mes]+vreceber[i];
+                system("pause");
+                system("cls");
+            }
+            printf("\n\n O total do valor recebido nesse mês será de: %.2f \n\n", ganhosmes[mes]);
+
+            printf("\n\n ===========================");
+            printf("\n\n           DESPESAS ");
+            printf("\n\n ===========================");
+
+            printf("\n Informe o número de contas a pagar no mês atual: ");
+            scanf("%d", &j);
+            system("pause");
+            system("cls");
+            // Enquanto a variável de controle não alcançar o valor do número de contas a pagar, o cadastro se repetirá
+            for (i=0; i<j; i++)
+            {
+                printf("\n Informe o nome da conta a pagar: \n\n");
+                fflush(stdin);
+                gets(contas[i]);
+                fflush(stdin);
+                printf("\n Informe o valor da conta a pagar: \n\n");
+                scanf("%f", &vpagar[i]);
+                // Após ser inserido o número do mês, os gastos desse mesmo mês recebem o próprio mais o novo valor gasto
+                gastosmes[mes]=gastosmes[mes]+vpagar[i];
+                // Após ser inserido o número do mês, os lucros desse mesmo mês recebem o próprio menos o novo valor gasto
+                lucromes[mes]=lucromes[mes]-vpagar[i];
+                system("pause");
+                system("cls");
+
+            }
+
+            printf("\n\n O total do valor gasto nesse mês será de: %.2f \n", gastosmes[mes]);
+            printf("\n\n O total de lucro nesse mês será de: %.2f", lucromes[mes]);
+            // Após ser inserido o número do ano e do mês, os valores recebidos nesse mesmo ano recebem o próprio mais os valores recebidos no mês
+            ganhosano[ano]=ganhosano[ano]+ganhosmes[mes];
+            printf("\n\n O total do valor recebido nesse ano é de: %.2f \n", ganhosano[ano]);
+            // Após ser inserido o número do ano e do mês, os valores gastos nesse mesmo ano recebem o próprio mais os valores gastos no mês
+            gastosano[ano]= gastosano[ano]+gastosmes[mes];
+            printf("\n\n O total do valor gasto nesse ano é de: %.2f \n", gastosano[ano]);
+            // Após ser inserido o número do ano e do mês, os valores do lucro nesse mesmo ano recebem o próprio mais os valores do lucro no mês
+            lucroano[ano]=lucroano[ano]+lucromes[mes];
+            printf("\n\n O total do lucro nesse ano é de: %.2f \n", lucroano[ano]);
+            // Após ser inserido o número do mês, o valor do lucro total recebe o próprio mais os valores do lucro no mês
+            lucro=lucro+lucromes[mes];
+            printf("\n\n O valor total de lucro da empresa é de: %.2f \n", lucro);
+            // O valor total das finanças da clínica, recebe o capital mais o lucro
+            financas= capital+lucro;
+            printf("\n\n O valor total econômico da empresa é de: %.2f \n", financas);
+            system("pause");
+            system("cls");
+
+            printf("\n\n Deseja realizar outra operação? S ou N \n");
+            scanf("%c",&resp);
+            fflush(stdin);
+// Se o usuário digitar S para realizar outra operação, o menu é exibido novamente
+            if(resp=='S')
+            {
+                printf("\n\n \t\t MENU\n\n");
+                printf("\n 1 ==> Fazer cadastro da clínica");
+                printf("\n 2 ==> Fazer cadastro de clientes");
+                printf("\n 3 ==> Agendar");
+                printf("\n 4 ==> Consultar agenda");
+                printf("\n 5 ==> Registrar pagamento ou procedimento realizado");
+                printf("\n 6 ==> Consultar informações da clínica");
+                printf("\n 7 ==> Consultar informações de clientes");
+                printf("\n 8 ==> Consultar informações econômicas da clínica");
+                printf("\n 0 ==> Sair");
+
+                printf("\n\n Digite o número da opção desejada ===> ");
+                scanf("%d",&opcp);
+                fflush(stdin);
+                system("cls");
+            }
+            else
+            {
+                opcp=0;
+            }
+        }
+
+    }
+    // Caso a opção escolhida pelo usuário seja 0, o programa é fechado
+    if (opcp==0)
+    {
+        return 0;
+    }
+
+}
+
+
+
