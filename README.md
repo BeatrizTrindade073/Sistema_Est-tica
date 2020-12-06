@@ -17,10 +17,9 @@
 |vpservico| Real| Valor solicitado por serviço|
 |vppacote| Real| Valor solicitado por pacote|
 |formapag| Cadeia de caracteres|Formas de pagamento|
-|gastos| Real| Valor total dos gastos|
+|formapagp|Cadeia de caracteres|Valor total a ser pago parceladamente|
 |gastosmes| Real| Valor dos gastos em um mês|
 |gastosano| Real| Valor dos gastos em um ano|
-|ganhos| Real| Valor total do ganho|
 |ganhosmes| Real| Valor recebido em um mês|
 |ganhosano| Real| Valor recebido em um ano|
 |lucro| Real| Valor total do lucro|
@@ -30,6 +29,7 @@
 |ano| Interiro| Número correspondente ao ano|
 |nome_fornecedor|Cadeia de caracteres|Nome do  fornecedor|
 |salario| Real| Salário de cada funcionário|
+|salserv|Real|Salário pago a cada serviço/empresa contratada|
 |funcionario|Cadeia de caracteres| Nome do funcionário|
 |idfuncionario| Cadeia de caracteres| Código de identificação do funcionário|
 |capital| Real| Capital da empresa|
@@ -37,4 +37,22 @@
 |receber| Cadeia de caracteres| Nome do cliente ou estabelecimento que deve à empresa|
 |vreceber| Real| Valores a receber|
 |vpagar| Real| Valor das contas a pagar|
-|listacompras|Cadeia de caracteres| Aquilo que a empresa necessita de comprar|
+|i|Inteiro|Variável de Controle|
+|j|Inteiro|Guarda algumas quantidades inserida pelo usuário|
+|proced|Cadeia de caracteres| Guard o nome do procedimento realizado|
+|resp|Cadeia de caracteres|Guarda a resposta do usuário|
+|opcp|Inteiro|Guarda a opção escolhida pelo usuário|
+|nmrfunc|Inteiro|Guarda o número de funcionários|
+|nmrserv|Inteiro |Guarda o número de serviços/empresas contratadas|
+|nmrforn|Inteiro | Guarda o número de fornecedores|
+|codagend|Inteiro|Guarda o código de agendamento|
+|codcliente|Inteiro|Guarda o código do  cliente|
+|npag|Inteiro|Guarda o número do pagamento|
+|total|Real|Guarda o valor total da conta ser paga pelo cliente|
+|financas|Real|Guarda o valor total das finanças da clínica|
+|nparcelas|Real|Guarda o número de parcelas a serem pagas escolhido pelo cliente|
+|contforn|Real|Guarda o valor a ser pago aos fornecedores|
+
+
+
+
